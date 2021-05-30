@@ -40,7 +40,7 @@ function App() {
                       <Contact />
                   </Route>
                   <Route exact path="/Login" component={Login}>
-                      
+                      <Login/>
                   </Route>
                   
                   <Route exact path="/" component={Products}>

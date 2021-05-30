@@ -19,8 +19,7 @@ router.post('/nuevo-producto', (req, res)=> {
         nameProduct: req.body.nameProduct,
         productType: req.body.productType,
         price: req.body.price,
-        place: req.body.place,
-        photo: req.body.photo
+        place: req.body.place
 
     })
     newProducto.save().then(producto => res.json(producto))
