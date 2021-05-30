@@ -9,7 +9,8 @@ const AddProduct = (props) => {
         nameProduct: "",
         productType: "",
         price: "",
-        place: ""
+        place: "",
+        photo: ""
     }
 
     const [form, setForm] = useState(initialForm);
@@ -19,13 +20,15 @@ const AddProduct = (props) => {
     const [fileName, setFileName] = useState("");
 
     const saveFile = (e) => {
-    setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
-    };
+        setForm({
+            ...form,
+            photo: e.target.files[0]
+        });
+    }
 
-    /*ATENCIÓN AQUÍ TENGO EL NOMBRE DEL ARCHIVO!*/ 
-        //console.log(file.name)
-   
+    /*ATENCIÓN AQUÍ TENGO EL NOMBRE DEL ARCHIVO!*/
+    //console.log(file.name)
+
     const handleChange = e => {
         setForm({
             ...form,
@@ -47,43 +50,62 @@ const AddProduct = (props) => {
             console.log(res)
           });
     }*/
-   
-    const handleSubmit = async (e) => {
+
+    const handleSubmit =  (e) => {
         console.log(form)
         e.preventDefault();
-       
+
 
         if (form.nameProduct === "" || form.productType === "" || form.price === "" || form.place === "") {
             setError("Todos los campos son obligatorios");
             return
         }
-        
-            
-        await axios.post('http://localhost:5000/api/producto/nuevo-producto', form)
-                .then(res => console.log(res))
-                .catch(err => console.error(err))
 
+        /* 
+     await axios.post('http://localhost:5000/api/producto/nuevo-producto', form)
+             .then(res => console.log(res))
+             .catch(err => console.error(err))
+*/
         const formData = new FormData();
-        formData.append("file", file);
-       
-        await axios.post(
+
+        formData.append("nameProduct", form.nameProduct);
+        formData.append("productType", form.productType);
+        formData.append("price", form.price);
+        formData.append("place", form.place);
+        formData.append("photo", form.photo);
+         axios.post(
             "http://localhost:5000/api/photo/upload", formData)
             .then(res => console.log(res))
             .catch(err => console.error(err))
-        
+
         console.log(formData)
 
-        
+
         console.log(form)
-    console.log(photos)
-    window.location.href = '/';
-        
+        console.log(photos)
+        //window.location.href = '/';
+
+        /*
+         const formData = new FormData();
+            formData.append('photo', newUser.photo);
+            formData.append('birthdate', newUser.birthdate);
+            formData.append('name', newUser.name);
+    
+            axios.post('http://localhost:5000/users/add/', formData)
+                 .then(res => {
+                    console.log(res);
+                 })
+                 .catch(err => {
+                    console.log(err);
+                 });
+        */
+
     }
 
     return (
         <div>
             <h1>Añadir producto</h1>
-            <form onSubmit={handleSubmit} action="/api/photo/upload" method="POST" encType="multipart/form-data">
+            <form onSubmit={handleSubmit}  encType="multipart/form-data">
                 <label htmlFor="nameProduct">Nombre del producto</label>
                 <input type="text"
                     name="nameProduct"
@@ -121,7 +143,7 @@ const AddProduct = (props) => {
 
                 <label htmlFor="photo">Nombre del producto</label>
                 <input type="file"
-                    name="file"  
+                    name="file"
                     onChange={saveFile}
                 />
                 <br />

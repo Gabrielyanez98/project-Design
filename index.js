@@ -7,7 +7,8 @@ const dotenv =  require('dotenv').config();
 const { mongoose} = require('./database');
 const authorRouter = require('./routes/author.routes');
 const multer = require('multer');
-const fs = require('fs');
+
+
 
 
 
@@ -29,7 +30,7 @@ app.use(express.urlencoded());
 
 // Routes
 app.use("/api/auth", authorRouter);
-app.use('/api/producto', require('./routes/producto.routes'));
+//app.use('/api/producto', require('./routes/producto.routes'));
 //app.use('/api/author', require('./routes/author.routes'));
 app.use('/api/shopper', require('./routes/shopper.routes'));
 app.use('/api/contact', require('./routes/contact.routes'));

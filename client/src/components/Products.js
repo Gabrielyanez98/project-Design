@@ -44,17 +44,9 @@ const Products = (props) => {
         LE PONGO EL VALOR DEL OBJETO FORM DEL COMPONENET ADD PRODCT Y AQUÍ LEHAGO UN GET
     */
 
-
+/*
     useEffect(async () => {
-        /*
-                try{
-                    const res = await axios.get("http://localhost:5000/api/producto");
-                    res => res.json()
-                    setProducts(json)
-                }catch(err){
-                    console.error(err)
-                }
-                */
+       
 
 
 
@@ -72,27 +64,46 @@ const Products = (props) => {
             })
 
     }, []);
+    */
 
 
-    useEffect(async () => {
-        try {
-            const res = await axios.get("http://localhost:5000/upload");
-            if (!res.data.files) {
-                setFallback(res.data.msg);
-                return;
-            } else {
-                setImages(res.data.files)
+    useEffect( () => {
+        const getAllFiles= async() => {
+            try {
+                const {data} = await axios.get("http://localhost:5000/upload");
+                
+                    setImages(data)
+                
+            } catch (err) {
+                console.log(err.message);
             }
-        } catch (err) {
-            console.log(err.message);
         }
+        
+       
+        getAllFiles()
+        
+/*
+        let url = "http://localhost:5000/products";
+        fetch(url)
+            .then((res) => res.json())
+            .then((json) => {
+                //console.log(json);
+
+                setProducts(json);
+            }, (error) => {
+
+                console.log(error);
+            })
+        console.log(products)
+        console.log(images)
+        */
     }, []);
-    console.log(images)
+    //console.log(images)
 
     const onChangeValue = (e) => {
         setSeleccionado(e.target.value);
     }
-    console.log(seleccionado)
+    //console.log(seleccionado)
 
     const addToCart = () => {
         setShoppingCart([...shoppingCart, products])
@@ -100,14 +111,13 @@ const Products = (props) => {
 
     const configureImage = image => {
         let devolver = "http://localhost:5000/uploads/" + image
-        console.log(devolver)
+        //console.log(devolver)
         return devolver
     }
-    console.log(seleccionado);
-
+    //console.log(seleccionado);
+    console.log(images)
     
-    let miArray=  [1,0,3]
-    console.log(miArray[0+2])
+    let prueba = ''
     return (
         <div>
 
@@ -148,20 +158,18 @@ const Products = (props) => {
                        
                             { 
                                 /* Products render for all viewers */
-                                products.filter(prod => {
+                                images.filter(prod => {
                                     return prod.productType.includes(seleccionado);
                                 })
                                     .map(product => (
                                         
                                         <div key={product._id} className="card col-4" >
-                                            { seleccionado ==""&&
-                                                images.map(image => (
-                                                    <img className="card-img-top" src={configureImage(image)} key={image} />
+                                       
+                                               
+                                                    <img className="card-img-top" src={configureImage(product.file_name)} key="123" />
                                                     
-                                                ))
                                                 
-                                                
-                                            }
+                                            
                                             
                                             <div className="card-body">
                                                 <h5 className="card-title">{product.nameProduct}</h5>
