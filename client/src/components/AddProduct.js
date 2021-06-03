@@ -1,9 +1,9 @@
-import React, { useState, useHistory } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 
 
-const AddProduct = (props) => {
+const AddProduct = () => {
 
     const initialForm = {
         nameProduct: "",
@@ -15,9 +15,7 @@ const AddProduct = (props) => {
 
     const [form, setForm] = useState(initialForm);
     const [error, setError] = useState(null);
-    const [photos, setPhotos] = useState('');
-    const [file, setFile] = useState();
-    const [fileName, setFileName] = useState("");
+    const [messageConfirm, setMessageConfirm] = useState('');
 
     const saveFile = (e) => {
         setForm({
@@ -26,8 +24,6 @@ const AddProduct = (props) => {
         });
     }
 
-    /*ATENCIÓN AQUÍ TENGO EL NOMBRE DEL ARCHIVO!*/
-    //console.log(file.name)
 
     const handleChange = e => {
         setForm({
@@ -36,20 +32,7 @@ const AddProduct = (props) => {
 
         })
 
-    }
-
-    /*const uploadHandler = (e)=> {
-        e.preventDefault();
-        const data = new FormData();
-        data.append('file', file);
-        dataata.append("fileName", fileName);
-        console.log(e.target.files)
-        axios.post('http://localhost:5000/api/producto/nuevo-producto', data)
-          .then((res) => {
-            setPhotos({ photos: [res.data, ...photos] });
-            console.log(res)
-          });
-    }*/
+    }   
 
     const handleSubmit =  (e) => {
         console.log(form)
@@ -58,14 +41,10 @@ const AddProduct = (props) => {
 
         if (form.nameProduct === "" || form.productType === "" || form.price === "" || form.place === "") {
             setError("Todos los campos son obligatorios");
-            return
+            setMessageConfirm('');
+            return    
         }
 
-        /* 
-     await axios.post('http://localhost:5000/api/producto/nuevo-producto', form)
-             .then(res => console.log(res))
-             .catch(err => console.error(err))
-*/
         const formData = new FormData();
 
         formData.append("nameProduct", form.nameProduct);
@@ -78,33 +57,14 @@ const AddProduct = (props) => {
             .then(res => console.log(res))
             .catch(err => console.error(err))
 
-        console.log(formData)
-
-
-        console.log(form)
-        console.log(photos)
-        //window.location.href = '/';
-
-        /*
-         const formData = new FormData();
-            formData.append('photo', newUser.photo);
-            formData.append('birthdate', newUser.birthdate);
-            formData.append('name', newUser.name);
-    
-            axios.post('http://localhost:5000/users/add/', formData)
-                 .then(res => {
-                    console.log(res);
-                 })
-                 .catch(err => {
-                    console.log(err);
-                 });
-        */
-
+           setForm(initialForm)
+           setMessageConfirm("Nuevo producto añadido")
+           
     }
 
     return (
         <div>
-            <h1>Añadir producto</h1>
+            <h1>Añadir un nuevo producto</h1>
             <form onSubmit={handleSubmit}  encType="multipart/form-data">
                 <label htmlFor="nameProduct">Nombre del producto</label>
                 <input type="text"
@@ -148,7 +108,9 @@ const AddProduct = (props) => {
                 />
                 <br />
                 <input type="submit" value="Enviar" />
-
+                <br/>
+                <p>{messageConfirm}</p>
+                <br/>
                 {
                     error != null ? (
                         <div>{error} </div>

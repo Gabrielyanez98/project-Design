@@ -7,22 +7,7 @@ const {env: {JWT_SECRET}} = process;
 const {checkToken} = require('../middleware');
 
 
-/*
-authorRouter.get('/',checkToken, (req, res) => {
-      Author.find({}, (err,authors) => {
-        if(err){
-            return res.status(400).send(err);
-        }
-        return res.send(authors);
-      }).populate("products").exec((err, author)=> {
-        
-    });
-});
 
-authorRouter.get('/:id', async (req, res) => {
-    const filterAuthor = await Author.findById(req.params.id);
-    res.json(filterAuthor);
-});*/
 
 authorRouter.get('/', async(req, res) => {
     const author = await Author.find();
@@ -30,37 +15,19 @@ authorRouter.get('/', async(req, res) => {
 })
 
 authorRouter.post('/signin', async (req, res) => {
-    const { name,surname, phone, gmail, place, user, password, bankData,photo, productsSold, score, productsId} = req.body;
-    /*const newAuthor = new Author ({
-        name: req.body.name,
-        surname: req.body.surname,
-        phone: req.body.phone,
-        gmail: req.body.gmail,
-        place: req.body.place,
-        user: req.body.user,
-        password: req.body.password,
-        bankAccount: req.body.bankAccount,
-        productsSold: req.body.productsSold,
-        score: req.body.score,
-        name,
+    const { name,
         surname,
-        phone, 
+        phone,
         gmail,
         place,
-        user, 
-        password, 
-        bankData, 
-        photo,
-        productsSold, 
-        score,
-        products: productsId
-
-    });*/
+        password,
+        bankData,
+        photo} = req.body;
    
     if(!gmail || !password){
         return res.status(403).send({
             success: false,
-            message: "Enter all credentials."
+            message: "El gmail y la contraseña son campos obligatorios"
         });
         
     }
@@ -70,20 +37,26 @@ authorRouter.post('/signin', async (req, res) => {
     if(foundUser){
         return res.status(403).send({
             success: false,
-            message: "User already exists."
+            message: "Este gmail ya existe"
         });
     }
 
     if(password.length < 6){
         return res.status(403).send({
             success: false,
-            message: "Password too short (min.6)."
+            message: "Contraseña demasiado corta (mínimo 6 carácteres)."
         });
     }
 
     let author = new Author({
+        name,
+        surname,
+        phone,
         gmail,
-        password
+        place,
+        password,
+        bankData,
+        photo
     })
 
     let newAuthor = await author.save();
@@ -94,7 +67,8 @@ authorRouter.post('/signin', async (req, res) => {
 
     return res.status(201).send({
         success: true,
-         token
+         token,
+         
     });
 
     
@@ -107,7 +81,7 @@ authorRouter.post("/login", async(req, res) => {
     if(!gmail || !password){
         return res.status(403).send({
             success: false,
-            message: "Enter all credentials."
+            message: "Todos los campos son obligatorios"
         });
     }
 
@@ -116,7 +90,7 @@ authorRouter.post("/login", async(req, res) => {
     if(!foundUser){
         return res.status(404).send({
             success: false,
-            message: "Wrong credentials."
+            message: "Contraseña incorrecta"
         });
     }
 
@@ -125,7 +99,7 @@ authorRouter.post("/login", async(req, res) => {
     if(!match){
         return res.status(403).send({
             success: false,
-            message: "Wrong credentials."
+            message: "Contraseña incorrecta"
         });
     }
 
@@ -139,14 +113,7 @@ authorRouter.post("/login", async(req, res) => {
     });
 });
 
-authorRouter.put('/:id', async (req, res) => {
 
-    const { name, surname, phone, gmail, place, user, password, bankData, photo, productsSold,score} = req.body;
-    const newAuthor = { name, surname, phone, gmail, place, user, password, bankData,photo, productsSold,score };
-    await Author.findByIdAndUpdate(req.params.id, newAuthor);
-    res.json({status: 'Autor actualizado'})
-
-});
 
 authorRouter.delete('/:id', async (req, res) => {
     await Author.findByIdAndRemove(req.params.id);

@@ -1,25 +1,16 @@
 
 
-import React, { useState, useHistory } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { withRouter } from "react-router-dom"
 
 
 
-
-/*COn axios: 
-const response = await axios.post(baseUrl, credentials)
-return response.data
- */
-let errores = []
-
 function Login(props) {
   const [gmail, setGmail] = useState();
   const [password, setPassword] = useState();
-  const [error, setError] = useState(false);
-
-  
-
+  const [condicionalError, setCondicionalError] = useState(false);
+  const [error, setError] = useState('')
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -30,40 +21,37 @@ function Login(props) {
     }
 
     try {
-
       const response = await axios.post('http://localhost:5000/api/auth/login', payload)
       console.log(response.data);
       localStorage.setItem('token', response.data.token)
-      props.history.push('/');
-      
+      props.history.push('/');  
     }
-    catch (err) {
-      
-      errores.push(2) 
-
-      errores.push(err.response.data.message) 
-      console.log(errores)
-
-      setError(true)
-    } 
+    catch (err) {    
+      setError(err.response.data.message)
+      setCondicionalError(true)
+    }  
   }
+    
+  
 
   return (
     <div>
-      <h1>Please Log In</h1>
+      <h1>Inicias sesión</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Gmail</p>
+          Gmail
           <input type="text" onChange={e => setGmail(e.target.value)} />
         </label>
+        <br/>
         <label>
-          <p>Password</p>
+          Contraseña
           <input type="password" onChange={e => setPassword(e.target.value)} />
         </label>
+        <br/>
         <div>
           <button type="submit">Submit</button>
         </div>
-        {error && (<h1>{errores[1]}</h1>)}
+        {condicionalError && (<h1>{error}</h1>)}
       </form>
     </div>
   )

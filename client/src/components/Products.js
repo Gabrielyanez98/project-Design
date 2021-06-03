@@ -1,72 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-//import sol from "./sol.jpg";
-//import fotoPrueba from "./fotoPrueba.png";
 
-//archivo webpack cargar fotos: include: SRC, use: [{loader: 'file-loader' }]
-//import './Styles.css';
 
-const Products = (props) => {
-
-    const [products, setProducts] = useState([]);
+const Products = () => {
+ 
     const [seleccionado, setSeleccionado] = useState('');
-    const [shoppingCart, setShoppingCart] = useState([]);
-    const [photos, setPhotos] = useState('');
     const [images, setImages] = useState([]);
-    const [fallback, setFallback] = useState('');
-    const [mapea, setMapea]= useState(0);
-
-    const handleClick = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/login', {
-                headers: {
-                    "Authorization": localStorage.getItem('token')
-                }
-            });
-            console.log(response.data)
-        }
-        catch (err) {
-            console.log(err.response.data);
-        }
-    }
-
-    /*const uploadHandler= (e) =>{
-        const data = new FormData();
-        data.append('name', e.target.files[0]);
-        console.log(e.target.files)
-        axios.post('http://localhost:5000/api/shopper/nuevo-shopper', data)
-          .then((res) => {
-            setPhotos({ photos: [res.data, ...photos] });
-            console.log(res)
-          });
-    }
-    
-        LE PONGO EL VALOR DEL OBJETO FORM DEL COMPONENET ADD PRODCT Y AQUÍ LEHAGO UN GET
-    */
-
-/*
-    useEffect(async () => {
-       
-
-
-
-
-        let url = "http://localhost:5000/api/producto";
-        fetch(url)
-            .then((res) => res.json())
-            .then((json) => {
-                //console.log(json);
-
-                setProducts(json);
-            }, (error) => {
-
-                console.log(error);
-            })
-
-    }, []);
-    */
-
-
+   
     useEffect( () => {
         const getAllFiles= async() => {
             try {
@@ -77,100 +17,73 @@ const Products = (props) => {
             } catch (err) {
                 console.log(err.message);
             }
-        }
-        
-       
-        getAllFiles()
-        
-/*
-        let url = "http://localhost:5000/products";
-        fetch(url)
-            .then((res) => res.json())
-            .then((json) => {
-                //console.log(json);
-
-                setProducts(json);
-            }, (error) => {
-
-                console.log(error);
-            })
-        console.log(products)
-        console.log(images)
-        */
+        }   
+        getAllFiles()      
     }, []);
-    //console.log(images)
-
+  
     const onChangeValue = (e) => {
         setSeleccionado(e.target.value);
     }
-    //console.log(seleccionado)
-
-    const addToCart = () => {
-        setShoppingCart([...shoppingCart, products])
-    }
 
     const configureImage = image => {
-        let devolver = "http://localhost:5000/uploads/" + image
-        //console.log(devolver)
+        let devolver = "http://localhost:5000/uploads/" + image 
         return devolver
     }
-    //console.log(seleccionado);
-    console.log(images)
-    
-    let prueba = ''
-    return (
-        <div>
 
-            <h2>{props.data}</h2>
-            {/*<input type="file" name="name" onChange={uploadHandler}/>*/}
-            <h1 className="miColor">Productos</h1>
+    const newProduct = (e)=> {
+        e.preventDefault();
+        window.location.href = '/add_product';  
+    }
+    
+    
+    
+    return (
+        <div>       
             <div className="container">
                 <div className="row">
 
                     {/*Show products selected */}
                     <form className="col-4" onChange={onChangeValue}>
-                        <h1>Selects para ver productos clasificados</h1>
+                       
+                        <p>Ver productos de: </p>
+                        <br/>
                         <input type="radio" value="" name="typeOfProducts" />
                         <label>Todos</label>
-                        <br />
+                        <br/>
                         <input type="radio" value="madera" name="typeOfProducts" />
                         <label>Madera</label>
-                        <br />
+                        <br/>
                         <input type="radio" value="arcilla" name="typeOfProducts" />
                         <label>Arcilla</label>
-                        <br />
+                        <br/>
                         <input type="radio" value="ropa" name="typeOfProducts" />
                         <label>Ropa</label>
                         <br />
                         <input type="radio" value="manualidades" name="typeOfProducts" />
                         <label>Diferentes manualidades</label>
-                        <br />
+                        <br/>
                         <input type="radio" value="decoracionHogar" name="typeOfProducts" />
                         <label>Decoración del hogar</label>
                         <br />
                         <input type="radio" value="otros" name="typeOfProducts" />
                         <label>Otros</label>
-                        <br />
+                        <br/>
+                        <br/>
+                        <br/>
+                        <button onClick={newProduct}>¿Ya estás registrado? ¡Entonces haz click para subir tu nuevo diseño!</button>
                     </form>
                     <section className="col-8">
-                        <h2>Productos que vienen de la api</h2>
+                        <h2>Diseños</h2>
                         <section className="row">
                        
                             { 
-                                /* Products render for all viewers */
+                                /* Products render for all viewers with selects */
                                 images.filter(prod => {
                                     return prod.productType.includes(seleccionado);
                                 })
-                                    .map(product => (
-                                        
-                                        <div key={product._id} className="card col-4" >
-                                       
-                                               
-                                                    <img className="card-img-top" src={configureImage(product.file_name)} key="123" />
-                                                    
-                                                
-                                            
-                                            
+                                    .map(product => (                                      
+                                        <div key={product._id} className="card col-4" >                                                                    
+                                                    <img className="card-img-top" src={configureImage(product.file_name)} alt="Cargando imágenes..."key={product._id} />                                                                                                                                                                      
                                             <div className="card-body">
                                                 <h5 className="card-title">{product.nameProduct}</h5>
                                                 <ul className="list-group list-group-flush">
@@ -180,7 +93,7 @@ const Products = (props) => {
                                                 </ul>
                                                 <button
 
-                                                    className="btn btn-primary">Añadir al carrito</button>
+                                                    className="btn btn-primary">Comprar producto</button>
                                             </div>
                                         </div>
 

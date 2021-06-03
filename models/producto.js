@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-//const Author = mongoose.model('Author');
-
 const ProductoSchema = new Schema ({
     
     nameProduct: 

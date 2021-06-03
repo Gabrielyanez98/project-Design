@@ -1,55 +1,40 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
     Link,    
 } from "react-router-dom";
-
-
-
-
+import '../App.css';
 
 const Navbar = ({logout}) => {
-        
-        return (
-            
+
+        return (      
                 <div>
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light">                      
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light miNavbar">                      
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">                             
 
-                                <li className="nav-item">
+                                <li className="nav-item ">
                                 <Link to="/">Productos</Link>
                                 </li>
-
-                                <li className="nav-item">
-                                <Link to="/Profile">Mi perfil</Link>
-                                </li>
                                 
                                 <li className="nav-item">
-                                <Link to="/SignIn">Sign in</Link>
+                                <Link to="/SignIn">Inscríbete</Link>
                                 </li>
 
                                 <li className="nav-item">
-                                <Link to="/Login">Login</Link>
+                                <Link to="/Login">Iniciar sesión</Link>
                                 </li>
                                 
-
                                 <li className="nav-item">
                                     <Link to="/Contact">Contacto</Link>
                                 </li>
-                                <li className="nav-item d-flex" onClick={logout}>
-                                    Logout
+                                <li className="nav-item " onClick={logout}>
+                                  Cerrar sesión
                                 </li>
-                                
-                            </ul>
-                            <form className="d-flex">
-                                <button className="btn btn-outline-success" type="submit">Imagen carrito de compra </button>
-                            </form>
+                            </ul>                          
                         </div>
                     </nav>                
-                </div>
-         
-        )
-    
+                </div>   
+        )  
 }
 
 export default Navbar

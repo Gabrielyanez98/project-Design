@@ -16,7 +16,7 @@ const UsersSchema = new mongoose.Schema({
     }
 });
 
-// Hash password so it can't be seen w/ access to database
+
 UsersSchema.pre("save", function (next) {
     if (!this.isNew || !this.isModified("password")) {
         return next();
