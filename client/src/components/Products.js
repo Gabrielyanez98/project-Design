@@ -27,6 +27,7 @@ const Products = () => {
 
     const configureImage = image => {
         let devolver = "http://localhost:5000/uploads/" + image 
+        console.log(devolver)
         return devolver
     }
 
@@ -38,42 +39,43 @@ const Products = () => {
     
     
     return (
-        <div>       
+        <div>      
+            <br />
+            <br /> 
             <div className="container">
                 <div className="row">
 
                     {/*Show products selected */}
-                    <form className="col-4" onChange={onChangeValue}>
+                    <form className="col-3" onChange={onChangeValue}>
                        
-                        <p>Ver productos de: </p>
-                        <br/>
+                        
                         <input type="radio" value="" name="typeOfProducts" />
-                        <label>Todos</label>
+                        <label className="selector">&nbsp; Todos</label>
                         <br/>
                         <input type="radio" value="madera" name="typeOfProducts" />
-                        <label>Madera</label>
+                        <label className="selector">&nbsp; Madera</label>
                         <br/>
                         <input type="radio" value="arcilla" name="typeOfProducts" />
-                        <label>Arcilla</label>
+                        <label className="selector">&nbsp; Arcilla</label>
                         <br/>
                         <input type="radio" value="ropa" name="typeOfProducts" />
-                        <label>Ropa</label>
+                        <label className="selector">&nbsp; Ropa</label>
                         <br />
                         <input type="radio" value="manualidades" name="typeOfProducts" />
-                        <label>Diferentes manualidades</label>
+                        <label className="selector">&nbsp; Diferentes manualidades</label>
                         <br/>
                         <input type="radio" value="decoracionHogar" name="typeOfProducts" />
-                        <label>Decoración del hogar</label>
+                        <label className="selector">&nbsp; Decoración del hogar</label>
                         <br />
                         <input type="radio" value="otros" name="typeOfProducts" />
-                        <label>Otros</label>
+                        <label className="selector">&nbsp; Otros</label>
                         <br/>
                         <br/>
                         <br/>
-                        <button onClick={newProduct}>¿Ya estás registrado? ¡Entonces haz click para subir tu nuevo diseño!</button>
+                        <button onClick={newProduct} className="btn btn-info buttonLogin">¿Ya estás registrado? ¡Entonces haz click para subir tu nuevo diseño!</button>
                     </form>
-                    <section className="col-8">
-                        <h2>Diseños</h2>
+                    <section className="col-9">
+                        
                         <section className="row">
                        
                             { 
@@ -83,7 +85,7 @@ const Products = () => {
                                 })
                                     .map(product => (                                      
                                         <div key={product._id} className="card col-4" >                                                                    
-                                                    <img className="card-img-top" src={configureImage(product.file_name)} alt="Cargando imágenes..."key={product._id} />                                                                                                                                                                      
+                                                    <img className="card-img-top" src={configureImage(product.file_name)} width="300" height="300" alt="Cargando imágenes..."key={product._id} />                                                                                                                                                                      
                                             <div className="card-body">
                                                 <h5 className="card-title">{product.nameProduct}</h5>
                                                 <ul className="list-group list-group-flush">
@@ -93,7 +95,7 @@ const Products = () => {
                                                 </ul>
                                                 <button
 
-                                                    className="btn btn-primary">Comprar producto</button>
+                                                    className=" btn btn-success">Comprar producto</button>
                                             </div>
                                         </div>
 

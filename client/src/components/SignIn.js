@@ -65,50 +65,70 @@ const SignIn = () => {
             {autorLogueado ?
                 <Route><AddProduct/></Route>
                 : 
-                <section>
-                    <h1>Registro</h1>
+                <section className="container containerContact">
+                    
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="name">Nombre</label>
-                        <input type="text" name="name"
+                    <h1>¡REGÍSTRATE!</h1>
+                    <br />
+                        <label htmlFor="name" className="form-label">Nombre</label>
+                        <input type="text"  className="form-control text"  name="name"
                             value={form.name}
                             onChange={handleChange} />
                         <br />
 
-                        <label htmlFor="surname">Apellidos</label>
-                        <input type="text" name="surname" value={form.surname} onChange={handleChange} />
+                        <label 
+                        htmlFor="surname" className="form-label">Apellidos</label>
+                        <input type="text" 
+                        className="form-control text" 
+                        name="surname" 
+                        value={form.surname} 
+                        onChange={handleChange} />
                         <br />
 
-                        <label htmlFor="phone">Teléfono</label>
-                        <input type="text"
+                        <label 
+                        htmlFor="phone" className="form-label">Teléfono</label>
+                        <input type="text"  className="form-control text" 
                             name="phone"
                             value={form.phone} onChange={handleChange} />
                         <br />
 
                         <label htmlFor="gmail">Gmail</label>
                         <input type="gmail"
-                            name="gmail" value={form.gmail} onChange={handleChange} />
-                        <br />
-
-                        <label htmlFor="place">Residencia</label>
-                        <input type="text" name="place" value={form.place}
+                        className="form-control text" 
+                            name="gmail" 
+                            value={form.gmail} 
                             onChange={handleChange} />
                         <br />
 
-                        <label htmlFor="password">Contraseña</label>
-                        <input type="password" name="password" value={form.password} onChange={handleChange} />
+                        <label htmlFor="place" className="form-label">Residencia</label>
+                        <input type="text" 
+                        className="form-control text" name="place" value={form.place}
+                            
+                        onChange={handleChange} />
                         <br />
 
-                        <label htmlFor="bankData">Datos bancarios</label>
+                        <label 
+                        htmlFor="password"
+                        className="form-label">Contraseña</label>
+                        <input type="password"  className="form-control text"  name="password" value={form.password} onChange={handleChange} />
+                        <br />
+
+                        <label 
+                        htmlFor="bankData"
+                        className="form-label">Datos bancarios</label>
                         <input type="text"
+                        className="form-control text" 
                             name="bankData"
                             value={form.bankData}
                             onChange={handleChange} />
                         <br />
 
-                        <label htmlFor="photo">foto</label>
-                        <input type="file" name="photo" value={form.photo} onChange={handleChange} />
+                        <label 
+                        htmlFor="photo" className="form-label">foto</label>
+                        <input 
+                        type="file"   className="form-control text" name="photo" value={form.photo} onChange={handleChange} />
                         <br />
-                        <input type="submit" value="Enviar" />
+                        <input type="submit" value="Enviar" className="btn btn-primary"/>
                     </form>
 
 

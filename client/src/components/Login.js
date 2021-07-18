@@ -24,37 +24,48 @@ function Login(props) {
       const response = await axios.post('http://localhost:5000/api/auth/login', payload)
       console.log(response.data);
       localStorage.setItem('token', response.data.token)
-      props.history.push('/');  
+      //props.history.push('/');  Con este método no se recarga la página y necesito que se recargue para el condicional render de la navbar
+      window.location.href = '/'
     }
-    catch (err) {    
+    catch (err) {
       setError(err.response.data.message)
       setCondicionalError(true)
-    }  
+    }
   }
-    
-  
+
+
 
   return (
-    <div>
-      <h1>Inicias sesión</h1>
+    <div className="container containerContact">
+
       <form onSubmit={handleSubmit}>
-        <label>
-          Gmail
-          <input type="text" onChange={e => setGmail(e.target.value)} />
-        </label>
-        <br/>
-        <label>
-          Contraseña
-          <input type="password" onChange={e => setPassword(e.target.value)} />
-        </label>
-        <br/>
-        <div>
-          <button type="submit">Submit</button>
+        <h1>INICIAR SESIÓN</h1>
+        <br />
+        <div className="mb-3">
+          <div className="form-group">
+            <label htmlFor="gmail" className="form-label">
+              Gmail
+              <input type="text" className="form-control text" name="gmail" placeholder="ejemplo@ejemplo.com" onChange={e => setGmail(e.target.value)} />
+            </label>
+          </div>
+          <br />
+
+          <div className="form-group">
+            <label htmlFor="" className="form-label">
+              Contraseña
+              <input type="password" className="form-control text" onChange={e => setPassword(e.target.value)} />
+            </label>
+          </div>
+          <br />
+
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary">Submit</button>
+          </div>
+          {condicionalError && (<h3>{error}</h3>)}
         </div>
-        {condicionalError && (<h1>{error}</h1>)}
       </form>
     </div>
   )
 }
 
-export default withRouter(Login);
+export default Login;
